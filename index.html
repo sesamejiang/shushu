@@ -336,6 +336,137 @@
             font-style: italic;
             white-space: nowrap;
         }
+
+        /* Media Query for Mobile Devices */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 20px 60px; /* Adjust padding for smaller screens */
+                margin: 10px auto; /* Adjust margin */
+                border-radius: 10px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            h2 {
+                font-size: 1.8em; /* Reduce heading size */
+                margin-bottom: 15px;
+            }
+
+            .desc-tip {
+                font-size: 12px;
+                margin-bottom: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            label {
+                font-size: 0.9em;
+                margin-bottom: 4px;
+            }
+
+            input[type="number"],
+            input[readonly],
+            input[type="text"] {
+                padding: 6px 8px; /* Adjust input padding */
+                font-size: 0.9em;
+            }
+
+            .highlight-input input[type="number"],
+            .blue-input input[type="number"] {
+                 padding: 6px 8px;
+            }
+
+            .supplement-row,
+            .supplement-row2,
+            .supplement-row3 {
+                padding: 10px; /* Adjust supplement row padding */
+                margin-bottom: 15px;
+                border-radius: 8px;
+            }
+
+            .supplement-row-title,
+            .supplement-row2-title,
+            .supplement-row3-title {
+                font-size: 1em;
+            }
+
+            .supplement-row input[type="text"],
+            .supplement-row2 input[type="text"],
+            .supplement-row3 input[type="text"],
+            .supplement-row input[type="number"],
+            .supplement-row2 input[type="number"],
+            .supplement-row3 input[type="number"] {
+                width: 40px; /* Smaller input width */
+                min-width: 30px;
+                font-size: 12px;
+                padding: 3px 1px;
+            }
+
+            .supplement-btn,
+            .supplement-btn-minus {
+                 min-width: 28px; /* Smaller button size */
+                 min-height: 24px;
+                 padding: 3px 8px;
+                 font-size: 12px;
+            }
+
+             .supplement-row3 .supplement-btn {
+                min-width: 32px;
+                min-height: 28px;
+                padding: 3px 10px;
+                font-size: 16px;
+             }
+
+            .supplement-note {
+                font-size: 10px;
+            }
+
+            .calc-btn {
+                position: static; /* Change button position */
+                display: block; /* Make button full width */
+                width: 100%;
+                margin-top: 20px;
+                padding: 10px 20px;
+                font-size: 16px;
+                text-align: center;
+                left: auto;
+                right: auto;
+                bottom: auto;
+            }
+
+            .section-title {
+                font-size: 1.2em;
+                margin: 10px 0 8px 0;
+            }
+             .supplement-row-content,
+             /* .supplement-row2-content, */ /* Remove column direction for supplement-row2-content */
+             .supplement-row3-content {
+                 flex-direction: column; /* Stack content vertically */
+                 align-items: flex-start;
+                 gap: 6px;
+             }
+
+             .supplement-row2-content {
+                 flex-direction: row; /* Keep content in a row */
+                 flex-wrap: wrap; /* Allow content to wrap */
+                 align-items: center; /* Align items vertically in the center */
+                 gap: 4px; /* Adjust gap for tighter spacing */
+             }
+
+             .supplement-row-content > div,
+             .supplement-row2-content > div,
+             .supplement-row3-content > div {
+                 width: 100%; /* Make inner divs full width */
+                 flex-wrap: wrap;
+             }
+
+            .inline-tip {
+                 display: block; /* Make inline tip a block element */
+                 margin-left: 0;
+                 margin-top: 2px;
+            }
+        }
     </style>
 </head>
 
