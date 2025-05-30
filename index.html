@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>车头计算器</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        html,
+        body {
+            background: #F8F8FF;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 24px auto 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            padding: 40px 80px 90px;
+            position: relative;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #9F79EE;
+            font-size: 2.2em;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .desc-tip {
+            text-align: center;
+            color: #757575;
+            font-size: 14px;
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .highlight-input {
+            display: block;
+            width: 100%;
+            border: 2px solid #9F79EE;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(159, 121, 238, 0.3);
+            background: #faf7ff;
+            padding: 0;
+            margin: 0;
+            transition: all 0.3s ease;
+        }
+
+        .highlight-input input[type="number"] {
+            border: none;
+            outline: none;
+            background: transparent;
+            width: 100%;
+            box-shadow: none;
+            margin-bottom: 0;
+            font-size: 1em;
+            padding: 8px 12px;
+        }
+
+        .highlight-input:hover {
+            box-shadow: 0 0 12px rgba(159, 121, 238, 0.5);
+        }
+
+        .blue-input {
+            display: block;
+            width: 100%;
+            border: 2px solid #03a9f4;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(3, 169, 244, 0.3);
+            background: #f7fbff;
+            padding: 0;
+            margin: 0;
+            transition: all 0.3s ease;
+        }
+
+        .blue-input input[type="number"] {
+            border: none;
+            outline: none;
+            background: transparent;
+            width: 100%;
+            box-shadow: none;
+            margin-bottom: 0;
+            font-size: 1em;
+            padding: 8px 12px;
+        }
+
+        .blue-input:hover {
+            box-shadow: 0 0 12px rgba(3, 169, 244, 0.5);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #333;
+            font-size: 1em;
+            font-weight: 500;
+        }
+
+        input[type="number"],
+        input[readonly],
+        input[type="text"] {
+            width: 100%;
+            padding: 8px 12px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            margin-bottom: 2px;
+            background: #fff;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input[readonly] {
+            background: #f0f0f0;
+            color: #888;
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus {
+            border-color: #9F79EE;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .supplement-row2,
+        .supplement-row,
+        .supplement-row3 {
+            border: 1px solid #eee;
+            background: rgba(246, 248, 250, 0.8);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 18px;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(159, 121, 238, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .supplement-row2:hover,
+        .supplement-row:hover,
+        .supplement-row3:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(159, 121, 238, 0.2);
+        }
+
+        .supplement-row2-title,
+        .supplement-row-title,
+        .supplement-row3-title {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 2px;
+            font-size: 1.05em;
+        }
+
+        .section-title {
+            font-weight: 600;
+            color: #9F79EE;
+            margin: 16px 0 12px 0;
+            font-size: 1.4em;
+            letter-spacing: 1px;
+        }
+
+        .supplement-row2-content,
+        .supplement-row-content,
+        .supplement-row3-content {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            font-size: 14px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            gap: 4px;
+        }
+
+        .supplement-note {
+            color: #888;
+            font-size: 12px;
+            margin: 0 2px 0 2px;
+            line-height: 1.3;
+            padding-left: 2px;
+            display: inline-block;
+            width: 100%;
+            text-align: left;
+        }
+
+        .supplement-row input[type="text"],
+        .supplement-row2 input[type="text"],
+        .supplement-row3 input[type="text"] {
+            width: 56px;
+            min-width: 36px;
+            font-size: 14px;
+            text-align: center;
+            margin: 0 2px;
+            padding: 4px 2px;
+            border-radius: 6px;
+        }
+
+        .supplement-row input[type="number"],
+        .supplement-row2 input[type="number"],
+        .supplement-row3 input[type="number"] {
+            width: 56px;
+            min-width: 36px;
+            font-size: 14px;
+            text-align: center;
+            margin: 0 2px;
+            padding: 4px 2px;
+            border-radius: 6px;
+        }
+
+        .supplement-row3 .supplement-btn {
+            min-width: 40px;
+            min-height: 32px;
+            padding: 4px 12px;
+            font-size: 18px;
+        }
+
+        .supplement-btn,
+        .supplement-btn-minus {
+            display: inline-block;
+            min-width: 32px;
+            min-height: 28px;
+            padding: 4px 10px;
+            margin: 0 4px;
+            background: linear-gradient(180deg, #9F79EE 80%, #8A63D2 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            box-shadow: 0 4px 8px rgba(159, 121, 238, 0.2), 0 1px 0 #fff inset;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .supplement-btn:hover,
+        .supplement-btn-minus:hover {
+            background: linear-gradient(180deg, #8A63D2 80%, #9F79EE 100%);
+            box-shadow: 0 6px 12px rgba(159, 121, 238, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .supplement-btn:active,
+        .supplement-btn-minus:active {
+            background: linear-gradient(180deg, #8A63D2 80%, #9F79EE 100%);
+            box-shadow: 0 2px 4px rgba(159, 121, 238, 0.2);
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .supplement-btn-minus {
+            background: linear-gradient(180deg, #ccc 80%, #bbb 100%);
+            color: #333;
+            margin-left: 0;
+            margin-right: 8px;
+            min-width: 32px;
+            min-height: 28px;
+            font-size: 14px;
+            padding: 4px 10px;
+        }
+
+        .calc-btn {
+            position: absolute;
+            right: 40px;
+            bottom: 30px;
+            padding: 12px 32px;
+            background: #9F79EE;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(159, 121, 238, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .calc-btn:hover {
+            background: #8A63D2;
+            box-shadow: 0 6px 12px rgba(159, 121, 238, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .calc-btn:active {
+            background: #8A63D2;
+            box-shadow: 0 2px 4px rgba(159, 121, 238, 0.2);
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .inline-tip {
+            color: #888;
+            font-size: 12px;
+            margin-left: 4px;
+            font-style: italic;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>车头计算器</h2>
+        <div class="desc-tip">*紫色框为必填，蓝色框计算补票时必填</div>
+
+        <div class="form-group">
+            <label>开车价</label>
+            <span class="highlight-input">
+                <input type="number" id="price" min="0" placeholder="请输入开车价">
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label>扣1人数</label>
+            <span class="highlight-input">
+                <input type="number" id="minusOne" min="0" placeholder="请输入扣1人数">
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label>人均价格</label>
+            <input type="text" id="avg" readonly>
+        </div>
+
+        <div class="form-group">
+            <label>实际上车人数
+                <span class="inline-tip">（按原人均补车的加到这里）</span>
+            </label>
+            <span class="blue-input">
+                <input type="number" id="actual" min="0" placeholder="请输入实际上车人数">
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label>跳车人数</label>
+            <input type="text" id="diff" readonly>
+        </div>
+
+        <div class="section-title">假如你是车头：</div>
+
+        <div class="supplement-row2">
+            <div class="supplement-row2-title">①开车后按原价补票（实际&lt;扣1时不计算）：</div>
+            <div class="supplement-row2-content">
+                有
+                <input type="number" id="supplement2" min="0" placeholder="0" readonly>
+                人按原价补票，现在人均
+                <input type="text" id="supplementAvg2" readonly>
+                ，补票结束后你要给所有人统一退
+                <input type="text" id="refund2" readonly>
+                。
+                <span class="supplement-note">
+                    （按原价补票的加到实际上车人数框里，这里会自动计算无需填写）
+                </span>
+            </div>
+        </div>
+
+        <div class="supplement-row">
+            <div class="supplement-row-title">②之后补票（批量）：</div>
+            <div class="supplement-row-content">
+                <div style="width:100%;display:flex;align-items:center;flex-wrap:wrap;gap:4px;">
+                    又有销冠带货要补票了，一共有
+                    <input type="number" id="supplement" min="0" value="0" style="width:56px;">
+                    人想补，现在人均已经打到
+                    <input type="text" id="supplementAvg" readonly>
+                    补完之后要给之前的仓鼠们一人退
+                    <input type="text" id="refund" readonly>
+                    。
+                </div>
+                <span class="supplement-note">
+                    （返还不包括这轮上车的仓鼠；会自动减去跳车人数差值，如果最后实际上车+补车小于原扣1人数，返还会是负数）
+                </span>
+            </div>
+        </div>
+
+        <div class="supplement-row3">
+            <div class="supplement-row3-title">③发红包补票（单个）：</div>
+            <div class="supplement-row3-content">
+                <div style="width:100%;display:flex;align-items:center;flex-wrap:wrap;gap:4px;">
+                    第
+                    <button type="button" class="supplement-btn" id="redPacketBtn">0</button>
+                    只仓鼠想发红包上车，她需要发
+                    <input type="text" id="redPacketCount" readonly>
+                    个
+                    <input type="text" id="redPacketValue" readonly>
+                    元的红包给除了自己的其它仓鼠。
+                </div>
+                <div style="width:100%;display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:4px;">
+                    知道你会点错→
+                    <button type="button" class="supplement-btn-minus" id="redPacketBtnMinus">-1</button>
+                </div>
+                <span class="supplement-note" style="margin-top:2px;">
+                    （③会基于①和②进行计算，但是②没发生也可以参考）
+                </span>
+            </div>
+        </div>
+
+        <button class="calc-btn" onclick="calc()">计算</button>
+    </div>
+
+    <script>
+        let redPacketCountBtn = 0;
+        document.getElementById('redPacketBtn').addEventListener('click', function () {
+            redPacketCountBtn++;
+            this.textContent = redPacketCountBtn;
+            calc();
+        });
+        document.getElementById('redPacketBtnMinus').addEventListener('click', function () {
+            if (redPacketCountBtn > 0) {
+                redPacketCountBtn--;
+                document.getElementById('redPacketBtn').textContent = redPacketCountBtn;
+                calc();
+            }
+        });
+
+        function calc() {
+            const price = parseFloat(document.getElementById('price').value);
+            const minusOne = parseInt(document.getElementById('minusOne').value);
+            const actual = parseInt(document.getElementById('actual').value);
+            const supplement = parseInt(document.getElementById('supplement').value) || 0;
+
+            if (isNaN(price) || isNaN(minusOne) || minusOne === 0) {
+                alert('请填写有效的开车价和扣1人数（且扣1人数不能为0）');
+                return;
+            }
+
+            // 基础计算
+            const avg = (price / minusOne).toFixed(2);
+            const diff = actual ? (minusOne - actual) : '';
+
+            // ①开车后按原价补票计算
+            let supplement2 = '', supplementAvg2 = '', refund2 = '';
+            if (diff < 0 && actual > 0) {
+                supplement2 = Math.abs(diff);
+                supplementAvg2 = (price / actual).toFixed(2);
+                refund2 = (avg - (price / actual)).toFixed(2);
+            }
+
+            // ②之后补票（批量）计算
+            let supplementAvg = '', refund = '';
+            if (actual > 0 && supplement > 0) {
+                const total = actual + supplement;
+                supplementAvg = (price / total).toFixed(2);
+                refund = (avg - supplementAvg - (parseFloat(refund2) || 0)).toFixed(2);
+            }
+
+            // ③发红包补票（单个）计算
+            let redPacketCount = '', redPacketValue = '';
+            if (actual > 0 && redPacketCountBtn > 0) {
+                const totalPeople = actual + supplement + redPacketCountBtn;
+                const perPerson = price / totalPeople;
+                redPacketCount = totalPeople - 1; // 除自己外的人数
+                redPacketValue = (perPerson / (totalPeople - 1)).toFixed(2);
+            }
+
+            // 输出结果
+            document.getElementById('avg').value = avg;
+            document.getElementById('diff').value = diff;
+            document.getElementById('supplement2').value = supplement2;
+            document.getElementById('supplementAvg2').value = supplementAvg2;
+            document.getElementById('refund2').value = refund2;
+            document.getElementById('supplementAvg').value = supplementAvg;
+            document.getElementById('refund').value = refund;
+            document.getElementById('redPacketCount').value = redPacketCount;
+            document.getElementById('redPacketValue').value = redPacketValue;
+        }
+
+        // 回车键触发计算
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') calc();
+        });
+
+        // 输入时清空结果
+        ['price', 'minusOne', 'actual', 'supplement'].forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                document.getElementById('avg').value = '';
+                document.getElementById('diff').value = '';
+                document.getElementById('supplement2').value = '';
+                document.getElementById('supplementAvg2').value = '';
+                document.getElementById('refund2').value = '';
+                document.getElementById('supplementAvg').value = '';
+                document.getElementById('refund').value = '';
+                document.getElementById('redPacketCount').value = '';
+                document.getElementById('redPacketValue').value = '';
+                redPacketCountBtn = 0;
+                document.getElementById('redPacketBtn').textContent = '0';
+            });
+        });
+    </script>
+</body>
+
+</html>
+    
