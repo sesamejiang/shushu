@@ -302,10 +302,42 @@
             padding: 4px 10px;
         }
 
-        .calc-btn {
+        .button-container {
             position: absolute;
             right: 40px;
             bottom: 30px;
+            display: flex;
+            gap: 12px; /* Adjust space between buttons */
+        }
+
+        .clear-btn {
+            padding: 12px 32px;
+            background: linear-gradient(180deg, #ccc 80%, #bbb 100%); /* Match minus button background */
+            color: #fff;
+            color: #333; /* Match minus button color */
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            flex-grow: 1; /* Allow button to grow */
+            text-align: center;
+        }
+
+        .clear-btn:hover {
+            background: linear-gradient(180deg, #bbb 80%, #aaa 100%); /* Slightly darker for hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .clear-btn:active {
+            background: linear-gradient(180deg, #bbb 80%, #aaa 100%); /* Slightly darker for active */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .calc-btn {
             padding: 12px 32px;
             background: #9F79EE;
             color: #fff;
@@ -315,6 +347,8 @@
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(159, 121, 238, 0.2);
             transition: all 0.3s ease;
+            flex-grow: 1; /* Allow button to grow */
+            text-align: center;
         }
 
         .calc-btn:hover {
@@ -422,17 +456,18 @@
                 font-size: 10px;
             }
 
-            .calc-btn {
-                position: static; /* Change button position */
-                display: block; /* Make button full width */
-                width: 100%;
-                margin-top: 20px;
-                padding: 10px 20px;
-                font-size: 16px;
-                text-align: center;
-                left: auto;
-                right: auto;
-                bottom: auto;
+            .button-container {
+                 position: static; /* Remove absolute positioning on mobile */
+                 display: flex;
+                 flex-direction: column; /* Stack buttons vertically */
+                 gap: 10px;
+                 margin-top: 20px;
+            }
+
+            .clear-btn {
+                 padding: 10px 20px;
+                 font-size: 16px;
+                 text-align: center;
             }
 
             .section-title {
@@ -563,12 +598,15 @@
                     <button type="button" class="supplement-btn-minus" id="redPacketBtnMinus">-1</button>
                 </div>
                 <span class="supplement-note" style="margin-top:2px;">
-                    （③会基于①和②进行计算，但是②没发生也可以参考）
+                    （③会基于①和②进行计算，但是前面的没发生也可以独立参考，只要填了实际上车人数就可以点这里）
                 </span>
             </div>
         </div>
 
-        <button class="calc-btn" onclick="calc()">计算</button>
+        <div class="button-container">
+            <button class="clear-btn" onclick="clearFields()">清空</button>
+            <button class="calc-btn" onclick="calc()">计算</button>
+        </div>
     </div>
 
     <script>
@@ -636,6 +674,24 @@
             document.getElementById('refund').value = refund;
             document.getElementById('redPacketCount').value = redPacketCount;
             document.getElementById('redPacketValue').value = redPacketValue;
+        }
+
+        function clearFields() {
+            document.getElementById('price').value = '';
+            document.getElementById('minusOne').value = '';
+            document.getElementById('actual').value = '';
+            document.getElementById('supplement').value = '0';
+            document.getElementById('avg').value = '';
+            document.getElementById('diff').value = '';
+            document.getElementById('supplement2').value = '';
+            document.getElementById('supplementAvg2').value = '';
+            document.getElementById('refund2').value = '';
+            document.getElementById('supplementAvg').value = '';
+            document.getElementById('refund').value = '';
+            document.getElementById('redPacketCount').value = '';
+            document.getElementById('redPacketValue').value = '';
+            redPacketCountBtn = 0;
+            document.getElementById('redPacketBtn').textContent = '0';
         }
 
         // 回车键触发计算
